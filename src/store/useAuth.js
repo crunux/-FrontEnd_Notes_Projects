@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
 
-export const userAuthStore = defineStore('Auth', {
+export const useAuthStore = defineStore('Auth', {
   state: () => {
     return{
       token: ''
@@ -9,7 +9,7 @@ export const userAuthStore = defineStore('Auth', {
   },
 
   getters: {
-  
+    getToken: (state) => state.token
   },
   action:{
     async signIn(username, password){

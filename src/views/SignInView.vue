@@ -1,16 +1,17 @@
 <script setup>
 import {ref} from 'vue'
-import { userAuthStore } from '@/store/userAuth.js'
+import { useAuthStore } from '@/store/useAuth.js'
 
 const username = ref('')
 const password = ref('')
 
-const authStore = userAuthStore()
+const authStore = useAuthStore()
 
 const login = async (username, password) => {
   username = username.value
   password = password.value
   await authStore.signIn(username, password)
+  this.$router.push("/");
 }
 
 
@@ -31,6 +32,9 @@ const login = async (username, password) => {
             </label>
             <button class="m-2 p-2 border-solid border-zinc-800" type="submit">Sing in</button>
           </form>
+          <p class="msg">¿No tienes cuenta?
+            <router-link to="/signup">Sign up</router-link>
+          </p>
         </div>
     </section>
 </template>
