@@ -1,19 +1,14 @@
 
 <script setup>
-import { useUserStore } from '@/store/useUsers.js'
-import { onBeforeMount } from 'vue';
-
-const userStore = useUserStore()
-
-onBeforeMount( async () => {
-    await userStore.fetchUser()
-}
+import UserView from '@/views/UserView.vue'
 
 </script>
 
 <template>
     <div>
-        <h2 >Hello, {{userStore.user.name}} </h2>
+        <Suspense>
+            <UserView/>
+        </Suspense>
     </div>
 </template>
 

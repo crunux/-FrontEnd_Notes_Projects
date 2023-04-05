@@ -3,27 +3,34 @@ import { useAuthStore } from './useAuth';
 
 
 
+
 export const useUserStore = defineStore('User', {
   state: () => {
-    user: {}
+    return {
+      user: null,
+      baseURL: 'http://127.0.0.1:3000/api'
+    }
   },
 
   getters: {
     getUser: (state) => state.user
   },
 
-  action:{
+  actions:{
     async fetchUser(){
-      const authStore = useAuthStore()
-      const res = await fetch("https://localhost:3000/api/users", {
+      const URL = `${this.baseURL}/user`
+      const authStore  = useAuthStore()
+      const token = authStore.token
+      const res = await fetch(URL, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${authStore.getToken}`
+          "Authorization": `Bearer ${token}`
         },
       });
       const user = await res.json();
       this.user = user
+      return user
     },
   }
 })
