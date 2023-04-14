@@ -8,6 +8,7 @@ export const useAuthStore = defineStore('Auth', {
       baseURL: 'http://127.0.0.1:3000/api'
     }
   },
+  persist: true,
 
   getters: {
     getToken: (state) => state.token
@@ -29,6 +30,7 @@ export const useAuthStore = defineStore('Auth', {
         }),
       });
       const response = await res.json();
+      console.log(response);
       if (response.error){
         return false
       }else{
@@ -45,7 +47,7 @@ export const useAuthStore = defineStore('Auth', {
         body: JSON.stringify({ username, password }),
       });
       const response = await res.json();
-      if(response.error){
+      if(response.errors){
         this.token = null
         return false
       }else{
@@ -53,9 +55,14 @@ export const useAuthStore = defineStore('Auth', {
         return true
       }
     },
+    leerToken(){
+      if(this.token){
+        
+      }
+    },
     logout(){
       this.token = null
     },
     
   }
-})
+});

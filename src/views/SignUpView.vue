@@ -74,6 +74,4 @@ const register = async () => {
   }
 }
 </script>
-
-<style scoped>
-</style>
+ 

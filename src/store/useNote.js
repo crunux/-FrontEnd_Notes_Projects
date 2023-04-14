@@ -4,39 +4,38 @@ import { useAuthStore } from './useAuth';
 
 
 
-export const useUserStore = defineStore('User', {
+export const useNoteStore = defineStore('Note', {
   state: () => {
     return {
-      user: null,
-      expireToken: null,
+      notes: [],
       baseURL: 'http://127.0.0.1:3000/api'
     }
   },
 
   getters: {
-    getUser: (state) => state.user,
-    getExpireToken: (state) => state.expireToken
+    getNotes: (state) => state.notes
   },
 
   actions:{
-    async fetchUser(){
-      const URL = `${this.baseURL}/user`
+    async createNote(note){
+      const URL = `${this.baseURL}/notes`
       const authStore  = useAuthStore()
       const token = authStore.token
+      const content = note.content
+      const important = note.important
       const res = await fetch(URL, {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
+        body: JSON.stringify({
+          content,
+          important
+        }),
       });
-      const user = await res.json();
-      if(user.error){
-        this.expireToken = true
-      }else{
-        this.user = user
-      }
-      console.log(user)
+      const response = await res.json();
+      return response
     },
   }
 })
