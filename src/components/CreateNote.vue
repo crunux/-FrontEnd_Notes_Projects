@@ -1,30 +1,43 @@
 <template>
-<div >
-  <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-      <div class="px-4 py-2 bg-white rounded-t-lg dark:bg-gray-800">
-          <label for="comment" class="sr-only">Your Note</label>
-          <textarea v-model="content" id="comment" rows="4" class="w-full px-0 text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Write a note..." required></textarea>
-      </div>
-      <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
-          <button @click="createdNote()" type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-              Create
-          </button>
-          <div class="flex pl-0 space-x-1 sm:pl-2">
-              <input v-model="important" type="checkbox" class="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-              <span class="sr-only">Important</span>
-          </div>
-      </div>
+  <div class="w-90 h-60 p-4 flex justify-center items-center" v-show="open">
+    <div class="mb-4 border bg-gray-50 rounded-md shadow-md ">
+        <div class="p-6 justify-content items-center bg-white backdrop-blur-lg rounded-md ">
+            <textarea v-model="content" id="comment" rows="12" class="p-2 text-md bg-white rounded-md" placeholder="Write a note..." required></textarea>
+        </div>
+        <div class=" h-12 flex items-center justify-content px-1 py-2 bg-white backdrop-blur-lg rounded-md ">
+            <button @click="createdNote()" type="submit" class="inline-flex items-center m-1 py-1.5 px-2 text-xs font-medium text-center rounded-md  text-slate-500 bg-white border border-current hover:text-white hover:bg-emerald-500">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+            </button>
+            <button @click="$emit('close')" class="inline-flex items-center m-1 py-1.5 px-2 text-xs font-medium text-center rounded-md bg-white text-slate-500 border border-current  hover:text-white hover:bg-red-500">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div class="flex pl-2 space-x-1 sm:pl-2">
+                <input v-model="important" type="checkbox" class="inline-flex rounded-md  justify-center p-2">
+                <span class="text-red-500 text-base">Important</span>
+            </div>
+        </div>
+    </div>
   </div>
-</div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, toRefs } from 'vue'
 import { useNoteStore } from '@/store/useNote.js'
 
 let content = ref("")
 let important = ref(false)
 const store = useNoteStore()
+
+const props = defineProps({
+  open:{
+    type: Boolean,
+    required: true
+  }
+})
+
+const { open } = toRefs(props)
+
+defineEmits("close")
 
 const createdNote = async () =>{
   console.log(content.value);
@@ -36,15 +49,20 @@ const createdNote = async () =>{
   }
   const noteCreated = await store.createNote(note)
   if (noteCreated.error){
-    console.log("hello 1");
     alert("nota no fue creada")
-    router.push({name: "signin"})
+    router.push({ name: "signin" })
   }else{
-    console.log("hello 2");
-    alert("la nota fue creada con exito")
+    console.log(noteCreated)
+    hide()
+    alert("Nota creada con exito")
   }
-
 }
+
+const hide = () =>{
+  console.log('click registered');
+  open = false
+}
+
 </script>
 
 <style scoped>

@@ -1,14 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from '@/views/HomeView.vue'
-import SignInView from '@/views/SignInView.vue'
-import SignUpView from '@/views/SignUpView.vue'
 import{ useAuthStore } from '@/store/useAuth.js'
 
 const routes = [
     {
         path: '/',
         name: 'home',
-        component: HomeView,
+        component: () => import(/* webpackChunkName: "home" */'@/views/HomeView.vue'),
         meta: {
             requireAuth: true
         }
@@ -16,7 +13,7 @@ const routes = [
     {
         path: '/signin',
         name: 'signin',
-        component: SignInView,
+        component: () => import(/* webpackChunkName: "signin" */'@/views/SignInView.vue'),
         meta: {
             requireAuth: false
         }
@@ -24,7 +21,7 @@ const routes = [
     {
         path: '/signup',
         name: 'signup',
-        component: SignUpView,
+        component: () => import(/* webpackChunkName: "signup" */'@/views/SignUpView.vue'),
         meta: {
             requireAuth: false
         }

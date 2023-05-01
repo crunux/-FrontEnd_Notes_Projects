@@ -31,13 +31,14 @@ export const useAuthStore = defineStore('Auth', {
       });
       const response = await res.json();
       console.log(response);
-      if (response.error){
+      if (response.error || response.errors){
         return false
       }else{
         return true
       }
     },
     async signIn(username, password){
+      
       const URL = `${this.baseURL}/auth/login`
       const res = await fetch(URL, {
         method: "POST",
@@ -47,19 +48,19 @@ export const useAuthStore = defineStore('Auth', {
         body: JSON.stringify({ username, password }),
       });
       const response = await res.json();
-      if(response.errors){
-        this.token = null
-        return false
-      }else{
+      if(response.token){
         this.token = response.token
         return true
+      }else{
+        this.token = null
+        return false
       }
     },
-    leerToken(){
-      if(this.token){
+    // leerToken(){
+    //   if(this.token){
         
-      }
-    },
+    //   }
+    // },
     logout(){
       this.token = null
     },

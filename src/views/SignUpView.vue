@@ -5,30 +5,30 @@
       <form>
           <label class="block p-1 m-1">
               <span class="block text-sm font-medium text-slate-700">Name</span>
-              <input v-model="name" type="text" class="border-solid border-zinc-800 peer ..."/>
+              <input v-model="name" type="text" class="border-solid text-center border-zinc-800 peer ..."/>
           </label>
           <label class="block p-1 m-1">
             <span class="block text-sm font-medium text-slate-700">Lastname</span>
-            <input v-model="lastname" type="text" class="border-solid border-zinc-800 peer ..."/>
+            <input v-model="lastname" type="text" class="border-solid text-center border-zinc-800 peer ..."/>
         </label>
           <label class="block p-1 m-1">
               <span class=" after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">Username</span>
-              <input v-model="username" type="text" class="border-solid border-zinc-800 peer ..."/>
+              <input v-model="username" type="text" class="border-solid text-center border-zinc-800 peer ..."/>
           </label>
           <label class="block p-1 m-1">
             <span class=" after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">Email</span>
-            <input v-model="email" type="email" class="border-solid border-zinc-800"/>
+            <input v-model="email" type="email" class="border-solid text-center border-zinc-800"/>
             <p class="mt-2 invisible peer-invalid:visible text-red-600 text-sm">
               Please provide a valid email address.
             </p>
           </label>
           <label class="block p-1 m-1">
               <span class=" after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">Password</span>
-              <input v-model="password" type="password" class="border-solid border-zinc-800 peer ..."/>
+              <input v-model="password" type="password" class="border-solid text-center border-zinc-800 peer ..."/>
           </label>
           <label class="block p-1 m-1">
             <span class=" after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">Confirm Password</span>
-            <input v-model="confirmPassword" type="password" class="border-solid border-zinc-800 peer ..."/>
+            <input v-model="confirmPassword" type="password" class="border-solid text-center border-zinc-800 peer ..."/>
         </label>
           <button class="m-2 p-2 border-solid border-zinc-800" @click.prevent="register">Sing up</button>
           <p class="text-red-500">{{feeback}}</p>

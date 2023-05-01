@@ -35,7 +35,54 @@ export const useNoteStore = defineStore('Note', {
         }),
       });
       const response = await res.json();
-      return response
+      if(response){
+        return response
+      }else{
+        return false
+      }
+      
     },
+
+    async updateNote(note, id){
+      const URL = `${this.baseURL}/note/${id}`
+      const authStore  = useAuthStore()
+      const token = authStore.token
+      const content = note.content
+      const important = note.important;
+      const res = await fetch(URL, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          content,
+          important
+        }),
+      });
+      const response = await res.json();
+      if(response){
+        return response
+      }else{
+        return false
+      }
+      
+    },
+
+    async deleteNote(id){
+      console.log(id);
+      const URL = `${this.baseURL}/note/${id}`
+      const authStore  = useAuthStore()
+      const token = authStore.token
+      const res = await fetch(URL, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      const response = await res.json();
+      return response
+    }
   }
 })
