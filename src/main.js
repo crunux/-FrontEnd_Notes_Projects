@@ -9,6 +9,7 @@ import { createPinia } from 'pinia'
 import router from '@/router'
 
 const pinia = createPinia()
+
 pinia.use(piniaPluginPersistedstate)
 
 const app = createApp(App)

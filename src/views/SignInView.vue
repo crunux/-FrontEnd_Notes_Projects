@@ -6,14 +6,16 @@
         <form>
           <label class="block p-1 m-1">
               <span class=" after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">Username</span>
-              <input v-model="username" type="text" class="border-solid text-center border-zinc-800 peer ..."/>
+              <input v-model="username" id="username" type="text" class="border-solid text-center border-zinc-800 peer ..."/>
           </label>
           <label class="block p-1 m-1">
               <span class=" after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">Password</span>
-              <input v-model="password" type="password" class="border-solid text-center border-zinc-800 peer ..."/>
+              <input v-model="password" id="password" type="password" class="border-solid text-center border-zinc-800 peer ..."/>
           </label>
           <button class="m-2 p-2 border-solid border-zinc-800" type="submit" @click.prevent="login">Sing in</button>
-          <p class="text-red-500">{{feeback}}</p>
+          <div>
+            <p class="text-red-500">{{feeback}}</p>
+          </div>
         </form>
         <p class="msg">¿No tienes cuenta?
           <router-link to="/signup">Sign up</router-link>
@@ -41,7 +43,7 @@ const login = async () => {
 
   const response = await store.signIn(username, password)
   if (response === false){
-    feeback.value = "SignIn error"
+    feeback.value = "Wrong username or password"
   }else{
     router.push({ name: "home" })
   }

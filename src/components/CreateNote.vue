@@ -1,5 +1,5 @@
 <template>
-  <div class="w-90 h-60 p-4 flex justify-center items-center" v-show="open">
+  <div class="w-90 h-60 p-4 flex justify-center items-center" v-show="props.open">
     <div class="mb-4 border bg-gray-50 rounded-md shadow-md ">
         <div class="p-6 justify-content items-center bg-white backdrop-blur-lg rounded-md ">
             <textarea v-model="content" id="comment" rows="12" class="p-2 text-md bg-white rounded-md" placeholder="Write a note..." required></textarea>
@@ -34,8 +34,6 @@ const props = defineProps({
     required: true
   }
 })
-
-const { open } = toRefs(props)
 
 defineEmits("close")
 
