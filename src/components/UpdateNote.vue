@@ -1,8 +1,8 @@
 <template>
-    <div class="w-90 h-60 p-4 flex justify-center items-center" v-show="props.open">
-      <div class="mb-4 border bg-gray-50 rounded-md shadow-md ">
+    <div class="w-98 h-50 fixed inset-0 z-[99] flex justify-center items-center" v-show="props.open">
+      <div class="mb-4 border bg-white rounded-md shadow-lg">
           <div class="p-6 justify-content items-center bg-white backdrop-blur-lg rounded-md ">
-              <textarea v-model="content" id="comment" rows="12" class="p-2 text-md bg-white rounded-md" placeholder="Write a note..." required></textarea>
+              <textarea v-model="content" id="comment" rows="8" class="p-2 text-md bg-white rounded-md" placeholder="Write a note..." required></textarea>
           </div>
           <div class=" h-12 flex items-center justify-content px-1 py-2 bg-white backdrop-blur-lg rounded-md ">
               <button @click="update(props.note.id)" type="submit" class="inline-flex items-center m-1 py-1.5 px-2 text-xs font-medium text-center rounded-md  text-slate-500 bg-white border border-current hover:text-white hover:bg-emerald-500">

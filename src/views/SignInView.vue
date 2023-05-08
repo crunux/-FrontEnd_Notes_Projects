@@ -42,7 +42,8 @@ const login = async () => {
   // console.log(username);
 
   const response = await store.signIn(username, password)
-  if (response === false){
+
+  if (!response){
     feeback.value = "Wrong username or password"
   }else{
     router.push({ name: "home" })

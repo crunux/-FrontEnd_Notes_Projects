@@ -36,6 +36,7 @@ const logout = () =>{
                 <h1 class="text-[40px]">BIENVENIDO!</h1>
                 <h2 class="text-[34px] overline">{{ user.name }} {{ user.lastname  }}</h2>
             </div>
+            
                 <teleport to='body'>
                     <CreateNote :open="isOpen" @close="isOpen = !isOpen"/>
                 </teleport>

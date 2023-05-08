@@ -2,13 +2,15 @@
 import { toRefs, ref } from 'vue'
 import { useNoteStore } from '@/store/useNote.js'
 import UpdateNote from './UpdateNote.vue';
+import DialogConfirm from './DialogConfirm.vue';
 
 const props = defineProps({
     note: {}
 })
 
 const store = useNoteStore()
-let isOpen = ref(false)
+let openUpdate = ref(false)
+let openDelete = ref(false)
 const { note } = toRefs(props)
 
 const delNote = async (id) => {
@@ -33,11 +35,14 @@ const delNote = async (id) => {
         <p class="pt-4 font-semibold text-[14px] max-h-[40ch] text-black">{{ note.content }}</p>
       </div>
       <div class="flex flex-row place-content-between m-1 p-1 justify-between items-center">
-        <button @click="isOpen = true" class=" mx-2 p-2 text-center border border-spacing-1 rounded-md text-green-500 hover:bg-green-500 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></button>
-        <button @click="delNote(note.id)" class=" mx-2 p-2 text-center border border-spacing-1 rounded-md text-red-600 hover:bg-red-500  hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>
+        <button @click="openUpdate= true" class=" mx-2 p-2 text-center border border-spacing-1 rounded-md text-green-500 hover:bg-green-500 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></button>
+        <button @click="openDelete = true" class=" mx-2 p-2 text-center border border-spacing-1 rounded-md text-red-600 hover:bg-red-500  hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>
       </div>
       <teleport to='body'>
-        <UpdateNote :open="isOpen" :note="note" @close="isOpen = !isOpen"/>
+        <UpdateNote :open="openUpdate" :note="note" @close="openUpdate= !openUpdate"/>
+      </teleport>
+      <teleport to='body' >
+        <DialogConfirm :open="openDelete" @confirm="delNote(note.id)" @close="openDelete = !openDelete"/>
       </teleport>
     </div>
 </template>
