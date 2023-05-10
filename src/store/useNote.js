@@ -70,19 +70,16 @@ export const useNoteStore = defineStore('Note', {
     },
 
     async deleteNote(id){
-      console.log(id);
       const URL = `${this.baseURL}/note/${id}`
       const authStore  = useAuthStore()
       const token = authStore.token
-      const res = await fetch(URL, {
+      await fetch(URL, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         }
       })
-      const response = await res.json();
-      return response
     }
   }
 })

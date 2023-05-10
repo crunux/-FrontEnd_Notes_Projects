@@ -1,8 +1,8 @@
 <script setup>
-import { toRefs, ref } from 'vue'
+import { toRefs, ref, defineAsyncComponent } from 'vue'
 import { useNoteStore } from '@/store/useNote.js'
-import UpdateNote from './UpdateNote.vue';
-import DialogConfirm from './DialogConfirm.vue';
+const  UpdateNote = defineAsyncComponent(() => import('./UpdateNote.vue'))
+const DialogConfirm  = defineAsyncComponent(() => import(  './DialogConfirm.vue'))
 
 const props = defineProps({
     note: {}
@@ -13,14 +13,14 @@ let openUpdate = ref(false)
 let openDelete = ref(false)
 const { note } = toRefs(props)
 
-const delNote = async (id) => {
-  const noteDeleted = await store.deleteNote(id);
-  if (noteDeleted.error){
+const deleteNote = async (id) => {
+  try{
+    await store.deleteNote(id);
+    openDelete.value = false
+    alert("Nota eliminada")
+  }catch{
     alert("Nota no fue eliminada")
     router.push({ name: "signin" })
-  }else{
-    console.log(noteDeleted);
-    alert("Nota eliminada")
   }
 }
 
@@ -42,7 +42,7 @@ const delNote = async (id) => {
         <UpdateNote :open="openUpdate" :note="note" @close="openUpdate= !openUpdate"/>
       </teleport>
       <teleport to='body' >
-        <DialogConfirm :open="openDelete" @confirm="delNote(note.id)" @close="openDelete = !openDelete"/>
+        <DialogConfirm :open="openDelete" @confirm-delete="deleteNote(note.id)" @close="openDelete = !openDelete"/>
       </teleport>
     </div>
 </template>

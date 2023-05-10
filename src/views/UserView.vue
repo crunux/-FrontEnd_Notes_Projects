@@ -1,11 +1,12 @@
 
 <script setup>
-import { useUserStore } from '@/store/useUsers.js'
-import { ref } from 'vue'
-import CardNote from '@/components/CardNote.vue';
-import CreateNote from '@/components/CreateNote.vue'
-import { useAuthStore } from '@/store/useAuth.js'
-import router from '@/router'
+import { useUserStore } from '@/store/useUsers.js';
+import { ref, defineAsyncComponent } from 'vue';
+const CardNote = defineAsyncComponent(() => import('@/components/CardNote.vue'))
+const CreateNote = defineAsyncComponent(() => import('@/components/CreateNote.vue'))
+import { useAuthStore } from '@/store/useAuth.js';
+import router from '@/router';
+
 const useStore = useUserStore()
 const auth = useAuthStore()
 
