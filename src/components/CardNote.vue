@@ -2,7 +2,11 @@
 import { toRefs, ref, defineAsyncComponent } from 'vue'
 import { useNoteStore } from '@/store/useNote.js'
 const  UpdateNote = defineAsyncComponent(() => import('./UpdateNote.vue'))
-const DialogConfirm  = defineAsyncComponent(() => import(  './DialogConfirm.vue'))
+const DialogConfirm  = defineAsyncComponent(() => import('./DialogConfirm.vue'))
+
+import { useNotification } from '@kyvg/vue3-notification'
+
+const notification = useNotification()
 
 const props = defineProps({
     note: {}
@@ -14,24 +18,33 @@ let openDelete = ref(false)
 const { note } = toRefs(props)
 
 const deleteNote = async (id) => {
+
   try{
     await store.deleteNote(id);
     openDelete.value = false
-    alert("Nota eliminada")
+    notification.notify({
+      title: "Delete",
+      text: "Nota Eliminada",
+      type: "warn",
+      group: "note"
+    })
   }catch{
-    alert("Nota no fue eliminada")
+    notification.notify({
+      title: "Delete",
+      text: "La Nota no fue eliminada",
+      type: "error",
+      group: "note"
+    })
     router.push({ name: "signin" })
   }
 }
 
 </script>
-<!-- grid grid-cols-3 -->
 <template>
     <div class="w-80 h-60 flex flex-col items-center p-4 hover:bg-gray-200 rounded-md border m-2 cursor-pointer hover:border-white">
-      <!-- <img class="rounded-md" :src="image" alt=""> -->
       <div class="flex flex-col m-auto p-auto justify-center items-center text-center">
         <h5 v-if="note.important" class="text-red-600 font-semibold pt-1 pb-3 text-[14px]">Important</h5>
-        <h5 v-else class="text-gray-600 pt-1 pb-3 font-semibold text-[14px]">Important</h5>
+        <!-- <h5 v-else class="text-gray-600 pt-1 pb-3 font-semibold text-[14px]">Important</h5> -->
         <p class="pt-4 font-semibold text-[14px] max-h-[40ch] text-black">{{ note.content }}</p>
       </div>
       <div class="flex flex-row place-content-between m-1 p-1 justify-between items-center">

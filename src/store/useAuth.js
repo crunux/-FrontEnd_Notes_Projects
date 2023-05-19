@@ -50,10 +50,10 @@ export const useAuthStore = defineStore('Auth', {
       const response = await res.json();
       if(response.token){
         this.token = response.token
-        return true
+        return response
       }else{
         this.token = null
-        return false
+        return response
       }
     },
     // leerToken(){

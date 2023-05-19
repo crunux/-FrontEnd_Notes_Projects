@@ -1,6 +1,6 @@
 <template>
 <div class="fixed inset-0 z-[99] flex justify-center items-center">
-    <div class="w-28 h-28 bg-emerald-200 rounded-md shadow-lg flex justify-center items-center">
+    <div class="w-full h-full bg-emerald-500  shadow-lg flex justify-center items-center">
         <div class="chaotic-orbit"></div>
     </div>
 </div>

@@ -1,8 +1,8 @@
 <template>
   <div class="w-98 h-50 fixed inset-0 z-[99] flex justify-center items-center" v-show="props.open">
-    <form class="mb-4 border bg-white rounded-md shadow-lg">
+    <div class="mb-4 border bg-white rounded-md shadow-lg">
       <div class="p-6 justify-content items-center bg-white backdrop-blur-lg rounded-md ">
-        <textarea v-model="content" id="comment" rows="8" class="p-2 text-md bg-white rounded-md" placeholder="Write a note..." required></textarea>
+        <textarea v-model="note.content" id="content" rows="8" class="p-2 text-md bg-white rounded-md" placeholder="Write a note..." required></textarea>
       </div>
       <div class=" h-12 flex items-center justify-content px-1 py-2 bg-white backdrop-blur-lg rounded-md ">
         <button @click="createdNote()" type="submit" class="inline-flex items-center m-1 py-1.5 px-2 text-xs font-medium text-center rounded-md  text-slate-500 bg-white border border-current hover:text-white hover:bg-emerald-500">
@@ -12,20 +12,25 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
         <div class="flex pl-2 space-x-1 sm:pl-2">
-          <input v-model="important" type="checkbox" class="inline-flex rounded text-red-600 focus:ring-red-500 border justify-center p-2">
+          <input v-model="note.important" id="important" type="checkbox" class="inline-flex rounded text-red-600 focus:ring-red-500 border justify-center p-2">
           <span class="text-red-500 p-1 font-medium text-base">Important</span>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { useNoteStore } from '@/store/useNote.js'
+import { useNotification } from '@kyvg/vue3-notification'
 
-let content = ref("")
-let important = ref(false)
+const notification = useNotification()
+
+const note = reactive({
+  content: "",
+  important: false
+})
 const store = useNoteStore()
 
 const props = defineProps({
@@ -38,20 +43,29 @@ const props = defineProps({
 const emit = defineEmits(["close"])
 
 const createdNote = async () =>{
-  content = content.value
-  important = important.value
-  const note = {
-    content,
-    important
-  }
-  const noteCreated = await store.createNote(note)
 
+  const noteCreated = await store.createNote(note)
+  
   if (noteCreated.error){
-    alert("nota no fue creada")
-    router.push({ name: "signin" })
+    let msg = noteCreated.error[0].params = content ? "Nota sin contenido": "Error al enviar la nota"
+    notification.notify({
+      title: "Error!",
+      text: msg,
+      type: "error",
+      group: "note"
+    })
   }else{
+    notification.notify({
+      title: "Success",
+      text: "Nota guardada correctamente",
+      type: "success",
+      group: "note"
+
+    })
     emit('close')
-    alert("Nota creada con exito")
+    content = ref("")
+    important = ref(false)
+    await useStore.fetchUser()
   }
 }
 
