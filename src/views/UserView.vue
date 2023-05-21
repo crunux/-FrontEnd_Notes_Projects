@@ -37,16 +37,15 @@ const logout = () =>{
                 <h1 class="text-[40px]">BIENVENIDO!</h1>
                 <h2 class="text-[34px] overline">{{ user.name }} {{ user.lastname  }}</h2>
             </div>
-            
-                <teleport to='body'>
-                    <CreateNote :open="isOpen" @close="isOpen = !isOpen"/>
-                </teleport>
             <div class="grid lg:grid-cols-3 md:grid-cols-2" >
                 <div v-for="note in user.notes" :key="note.id">
                     <CardNote :note="note"/>
                 </div>
             </div>
         </div>
+        <teleport to='body'>
+            <CreateNote :open="isOpen" @close="isOpen = !isOpen"/>
+        </teleport>
     </div>
 </template>
 

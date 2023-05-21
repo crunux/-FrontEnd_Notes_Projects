@@ -63,8 +63,8 @@ const createdNote = async () =>{
 
     })
     emit('close')
-    content = ref("")
-    important = ref(false)
+    note.content = ''
+    note.important = false
     await useStore.fetchUser()
   }
 }
