@@ -10,6 +10,10 @@ RUN npm install
 
 COPY . .
 
+ARG VITE_HOST_BACKEND
+
+ARG VITE_PORT_BACKEND
+
 RUN npm run build
 
 #Production Stage
