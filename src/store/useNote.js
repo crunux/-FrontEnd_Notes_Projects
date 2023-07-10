@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { useAuthStore } from './useAuth';
 const HOST_BACKEND = import.meta.env.VITE_HOST_BACKEND;
 const PORT_BACKEND = import.meta.env.VITE_PORT_BACKEND;
+const PROTOCOL = import.meta.env.VITE_PROTOCOL;
 
 
 
@@ -9,7 +10,7 @@ export const useNoteStore = defineStore('Note', {
   state: () => {
     return {
       notes: [],
-      baseURL: `http://${HOST_BACKEND}:${PORT_BACKEND}/api`
+      baseURL: `${PROTOCOL}://${HOST_BACKEND}:${PORT_BACKEND}/api`
     }
   },
 
