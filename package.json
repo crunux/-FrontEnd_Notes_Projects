@@ -1,19 +1,11 @@
 {
-  "name": "note-frontend",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --host",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
   "dependencies": {
     "@kyvg/vue3-notification": "^2.9.0",
     "@vuelidate/core": "^2.0.2",
     "@vuelidate/validators": "^2.0.2",
     "pinia": "^2.0.29",
     "pinia-plugin-persistedstate": "^3.1.0",
+    "serve": "^14.2.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },
