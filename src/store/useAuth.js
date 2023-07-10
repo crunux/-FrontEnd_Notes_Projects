@@ -1,13 +1,14 @@
 import { defineStore } from 'pinia';
-const HOST_BACKEND = import.meta.env.VITE_HOST_BACKEND;
-const PORT_BACKEND = import.meta.env.VITE_PORT_BACKEND;
+// const HOST_BACKEND = import.meta.env.VITE_HOST_BACKEND;
+// const PORT_BACKEND = import.meta.env.VITE_PORT_BACKEND;
+const API = import.meta.env.VITE_BACKEND_API
 const PROTOCOL = import.meta.env.VITE_PROTOCOL;
 
 export const useAuthStore = defineStore('Auth', {
   state: () => {
     return {
       token: null,
-      baseURL: `${PROTOCOL}://${HOST_BACKEND}:${PORT_BACKEND}/api`
+      baseURL: `${PROTOCOL}://${API}/api`
     }
   },
   persist: true,
